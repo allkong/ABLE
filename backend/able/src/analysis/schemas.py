@@ -32,4 +32,4 @@ class FeatureMapResponse(ImmutableBaseModel):
 class HeatMapResponse(ImmutableBaseModel):
     original_img: str
     heatmap_img: str
-    class_scores: ClassScores
+    class_scores: List[ClassScore]

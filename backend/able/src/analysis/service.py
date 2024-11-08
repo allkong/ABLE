@@ -94,4 +94,4 @@ def get_heatmap(project_name: str, result_name:str, checkpoint_name:str) -> Opti
         logger.info(f"이전에 진행된 분석 결과가 없음: {e}")
         return None
     
-    return HeatMapResponse(original_img=original, heatmap_img=heatmap, class_scores=class_scores)
+    return HeatMapResponse(original_img=original, heatmap_img=heatmap, class_scores=class_scores.class_scores)
