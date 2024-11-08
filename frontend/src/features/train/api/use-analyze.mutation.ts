@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import axiosInstance from '@/shared/api/config/axios-instance';
 import trainKey from '@features/train/api/train-key';
-import { FeatureMapProps, FeatureMapResponse, CreateFeatureMapProps } from '@features/train/types/analyze.type';
+import { FeatureMapProps, CreateFeatureMapProps, FeatureMapResponse } from '@features/train/types/analyze.type';
 
 const createFeatureMap = async ({ projectName, resultName, epochName, deviceIndex, image }: CreateFeatureMapProps) => {
   try {
@@ -40,12 +40,7 @@ const createFeatureMap = async ({ projectName, resultName, epochName, deviceInde
   }
 };
 
-const fetchFeatureMap = async ({
-  projectName,
-  resultName,
-  epochName,
-  blockIds,
-}: FeatureMapProps): Promise<FeatureMapResponse[]> => {
+const fetchFeatureMap = async ({ projectName, resultName, epochName, blockIds }: FeatureMapProps): Promise<string> => {
   try {
     const response = await axiosInstance.post('/analyses/feature-map', {
       project_name: projectName,
@@ -53,10 +48,10 @@ const fetchFeatureMap = async ({
       epoch_name: epochName,
       block_id: blockIds,
     });
-    return response.data.data.feature_map;
+    return response.data.data.featureMap;
   } catch (error) {
     console.error('Feature map fetch error:', error);
-    return [];
+    return '';
   }
 };
 
@@ -65,16 +60,11 @@ export const useCreateFeatureMap = () => {
 
   return useMutation({
     mutationFn: createFeatureMap,
-    onSuccess: (data, variables) => {
-      queryClient.invalidateQueries({
-        queryKey: trainKey.featureMap(
-          variables.projectName,
-          variables.resultName,
-          variables.epochName,
-          variables.deviceIndex
-        ),
-        exact: true,
-      });
+    onSuccess: (data: FeatureMapResponse, variables) => {
+      queryClient.setQueryData<FeatureMapResponse>(
+        trainKey.featureMap(variables.projectName, variables.resultName, variables.epochName, variables.deviceIndex),
+        data
+      );
     },
     onError: (error) => {
       console.error('Feature map creation failed:', error);
@@ -87,22 +77,10 @@ export const useFetchFeatureMap = () => {
 
   return useMutation({
     mutationFn: fetchFeatureMap,
-    onSuccess: (featureMap, variables) => {
-      queryClient.setQueryData<Array<FeatureMapResponse>>(
+    onSuccess: (featureMap: string, variables) => {
+      queryClient.setQueryData<string>(
         trainKey.select(variables.projectName, variables.resultName, variables.epochName, variables.blockIds),
-        (oldData) => {
-          if (!oldData) return featureMap;
-
-          const updatedFeatureMap = oldData.map((block) => {
-            const feature = featureMap.find((item) => item.blockId === block.blockId);
-            return {
-              ...block,
-              img: feature ? feature.img : block.img,
-            };
-          });
-
-          return updatedFeatureMap;
-        }
+        () => featureMap
       );
     },
   });

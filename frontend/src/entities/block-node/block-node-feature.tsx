@@ -14,7 +14,7 @@ interface BlockNodeFeatureProps {
    data: {
       block: BlockItem;
       onFieldChange: (fieldName: string, value: string) => void;
-      featureMap?: Array<{ blockId: string; img: string }>;
+      featureMap?: string;
    };
    sourcePosition?: Position;
    targetPosition?: Position;
@@ -25,17 +25,14 @@ const BlockNodeFeature = ({
    sourcePosition = Position.Bottom,
    targetPosition = Position.Top,
 }: BlockNodeFeatureProps) => {
-   const { uploadedImage, setUploadedImage } = useImageStore();
+   const { uploadedImage, setUploadedImage, heatMapImage, classScores, lastConv2dId } = useImageStore();
 
    const blockColor = useMemo(
       () => (data?.block?.type ? blockColors[data.block.type] : Common.colors.gray200),
       [data?.block?.type]
    );
 
-   const blockImage = useMemo(() => {
-      const feature = data.featureMap?.find((item) => item.blockId === data.block.id);
-      return feature?.img || null;
-   }, [data.featureMap, data.block.id]);
+   const blockImage = useMemo(() => (data.featureMap ? `data:image/jpeg;base64,${data.featureMap}` : null), [data.featureMap]);
 
    const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
       if (event.target.files && event.target.files[0]) {
@@ -48,6 +45,12 @@ const BlockNodeFeature = ({
       }
    };
 
+   const displayUploadedImage = useMemo(() => {
+      return uploadedImage && !uploadedImage.startsWith('data:image/jpeg;base64,')
+         ? `data:image/jpeg;base64,${uploadedImage}`
+         : uploadedImage;
+   }, [uploadedImage]);
+
    const handleClickUpload = () => {
       document.getElementById('fileUpload')?.click();
    };
@@ -59,9 +62,9 @@ const BlockNodeFeature = ({
          <S.FieldWrapper>
             {data.block.type === "data" ? (
                <>
-                  {uploadedImage ? (
+                  {displayUploadedImage ? (
                      <S.Image
-                        src={uploadedImage}
+                        src={displayUploadedImage}
                         alt={data.block.name}
                         onClick={handleClickUpload}
                         style={{ cursor: "pointer" }}
@@ -80,7 +83,30 @@ const BlockNodeFeature = ({
                   />
                </>
             ) : (
-               blockImage && <S.Image src={blockImage} alt={data.block.name} />
+               data.block.id === lastConv2dId && heatMapImage ? (
+                  <div style={{ display: "flex", alignItems: "center" }}>
+                     <S.Image src={`data:image/jpeg;base64,${heatMapImage}`} alt={data.block.name} />
+                     <div style={{ marginLeft: "1rem", display: "flex", flexDirection: "column" }}>
+                        {classScores.map((score, index) => (
+                           <div key={index} style={{ display: "flex", alignItems: "center", marginBottom: "0.5rem" }}>
+                              <span style={{ marginRight: "0.5rem", fontWeight: "bold" }}>{score.class_name}</span>
+                              <div style={{ backgroundColor: "#ccc", width: "50px", height: "8px", position: "relative" }}>
+                                 <div
+                                    style={{
+                                       backgroundColor: "#4A90E2",
+                                       width: `${score.classScore}%`,
+                                       height: "100%",
+                                    }}
+                                 />
+                              </div>
+                              <span style={{ marginLeft: "0.5rem" }}>{score.classScore}</span>
+                           </div>
+                        ))}
+                     </div>
+                  </div>
+               ) : (
+                  blockImage && <S.Image src={blockImage} alt={data.block.name} />
+               )
             )}
          </S.FieldWrapper>
          <Handle type="source" position={sourcePosition} />

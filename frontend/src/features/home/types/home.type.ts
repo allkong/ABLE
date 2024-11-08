@@ -1,5 +1,6 @@
 export interface HistoryItem {
   index: number;
+  originDirName: string;
   date: string;
   accuracy: string;
   status: string;
