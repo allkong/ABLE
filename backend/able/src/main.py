@@ -7,6 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from src.block.router import block_router
 from src.deploy.router import deploy_router
+from src.checkpoints.router import checkpoint_router
 from src.device.router import device_router
 from src.train.router import train_router
 from src.canvas.router import canvas_router
@@ -44,6 +45,8 @@ app.include_router(canvas_router, prefix="/canvas", tags=["캔버스"])
 app.include_router(validation_router, prefix="/validation", tags=["확인"])
 
 app.include_router(analysis_router, prefix="/analyses", tags=["분석"])
+
+app.include_router(checkpoint_router, prefix="/checkpoints", tags=["체크포인트"])
 
 app.include_router(deploy_router, prefix="/deploy", tags=["배포"])
 
