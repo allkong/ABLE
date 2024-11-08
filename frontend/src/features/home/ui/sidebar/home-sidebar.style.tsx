@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 
 import Common from '@shared/styles/common';
+import { scrollbarHiddenMixin } from '@shared/styles/mixins.style';
 
 export const SidebarContainer = styled.div`
   width: 15.625rem;
@@ -41,6 +42,8 @@ export const Button = styled.button`
 export const FolderSection = styled.div`
   margin: 1rem 0;
   flex: 1;
+  overflow: auto;
+  ${scrollbarHiddenMixin}
 `;
 
 export const Folder = styled.div<{ isSelected: boolean }>`

@@ -31,3 +31,7 @@ export interface Block {
 export interface BlocksResponse extends Response {
   data: { blocks: Block[] };
 }
+
+export interface SearchBlockResponse extends Response {
+  data: { block: Block };
+}

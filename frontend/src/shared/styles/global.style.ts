@@ -17,7 +17,8 @@ export const globalStyle = css`
   }
 
   body,
-  button {
+  button,
+  input {
     font-family: 'Pretendard', sans-serif;
     color: ${Common.colors.black};
   }

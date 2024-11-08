@@ -1,9 +1,9 @@
 import { Node as XYFlowNode, Edge as XYFlowEdge, MarkerType } from '@xyflow/react';
 
-import type { BlockSchema, CanvasResponse, EdgeSchema } from '@features/canvas/types/canvas.type';
+import type { BlockSchema, CanvasSchema, EdgeSchema } from '@features/canvas/types/canvas.type';
 import type { BlockItem } from '@features/canvas/types/block.type';
 
-export const transformCanvasResponse = (response: CanvasResponse) => {
+export const transformCanvasResponse = (response: CanvasSchema) => {
   const transformedNodes: XYFlowNode[] = response.canvas.blocks.map((block) => ({
     id: block.id,
     type: 'custom',

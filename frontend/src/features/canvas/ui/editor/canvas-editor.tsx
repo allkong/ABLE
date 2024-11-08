@@ -7,6 +7,7 @@ import {
   useNodesState,
   useEdgesState,
   useReactFlow,
+  getOutgoers,
   type OnConnect,
   type Node as XYFlowNode,
   MarkerType,
@@ -17,9 +18,11 @@ import toast from 'react-hot-toast';
 
 import * as S from '@features/canvas/ui/editor/canvas-editor.style';
 import Common from '@shared/styles/common';
+import { DATA_BLOCK_ID } from '@features/canvas/costants/block.constant';
 import { initialNodes, initialEdges } from '@features/canvas/model/initial-data';
 import { TOAST_MESSAGE } from '@features/canvas/costants/message.constant';
 import type { BlockItem } from '@features/canvas/types/block.type';
+import type { TrainConfig, TrainRequest } from '@features/canvas/types/train.type';
 import {
   transformCanvasResponse,
   transformEdgesToEdgeSchema,
@@ -29,6 +32,7 @@ import { isValidConnection } from '@features/canvas/utils/cycle-validator.util';
 import { useProjectNameStore } from '@/entities/project/model/project.model';
 import { useFetchCanvas } from '@features/canvas/api/use-canvas.query';
 import { useSaveCanvas } from '@features/canvas/api/use-canvas.mutation';
+import { useStartTrain } from '@features/canvas/api/use-train.mutation';
 import { useNodeDropHandler } from '@features/canvas/model/use-node-drop-handler.model';
 import { useNodeChangeHandler } from '@features/canvas/model/use-node-change-handler.modle';
 import { useEdgeChangeHandler } from '@features/canvas/model/use-edge-change-handler.model';
@@ -43,6 +47,7 @@ const CanvasEditor = () => {
   const { projectName } = useProjectNameStore();
   const { data } = useFetchCanvas(projectName || '');
   const { mutateAsync: saveCanvas } = useSaveCanvas();
+  const { mutate: startTrain } = useStartTrain();
 
   const [nodes, setNodes] = useNodesState(initialNodes);
   const [edges, setEdges] = useEdgesState(initialEdges);
@@ -119,12 +124,65 @@ const CanvasEditor = () => {
     [setNodes]
   );
 
-  const handleTrainButtonClick = () => {
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleRunButtonClick = () => {
+    if (!isDataBlockConnected()) {
+      toast.error(TOAST_MESSAGE.data);
+      return;
+    }
     setIsModalOpen(true);
   };
 
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
+  const isDataBlockConnected = () => {
+    const dataBlock = nodes.find((node) => (node.data.block as BlockItem).name === 'data');
+    if (!dataBlock) return false;
+
+    return edges.some((edge) => edge.source === dataBlock.id || edge.target === dataBlock.id);
+  };
+
+  // 데이터 블록이거나 그 자식인지 확인
+  const getDataBlockDescendants = (dataBlockId: string): Set<string> => {
+    const visited = new Set<string>([dataBlockId]);
+
+    // 데이터 블록의 모든 자식 노드를 탐색하는 재귀 함수
+    const traverse = (currentId: string) => {
+      const currentNode = nodes.find((node) => node.id === currentId);
+      if (!currentNode) return;
+
+      const outgoers = getOutgoers(currentNode, nodes, edges);
+      outgoers.forEach((outgoer) => {
+        if (!visited.has(outgoer.id)) {
+          visited.add(outgoer.id);
+          traverse(outgoer.id);
+        }
+      });
+    };
+
+    traverse(dataBlockId);
+    return visited;
+  };
+
+  const getConnectedStatus = (nodeId: string) => {
+    const dataDescendants = getDataBlockDescendants(DATA_BLOCK_ID);
+    return dataDescendants.has(nodeId);
+  };
+
+  const handleTrain = (trainConfig: TrainConfig) => {
+    const transformedBlocks = transformNodesToBlockSchema(nodes);
+    const transformedEdges = transformEdgesToEdgeSchema(edges);
+
+    const trainRequest: TrainRequest = {
+      projectName: projectName || '',
+      epoch: trainConfig.epoch ?? 0,
+      batchSize: trainConfig.batchSize ?? 0,
+      device: trainConfig.device,
+      canvas: { blocks: transformedBlocks, edges: transformedEdges },
+    };
+
+    startTrain(trainRequest);
   };
 
   const handleSavaButtonClick = async () => {
@@ -146,7 +204,7 @@ const CanvasEditor = () => {
 
   return (
     <>
-      {isModalOpen && <TrainModal onClose={handleCloseModal} />}
+      {isModalOpen && <TrainModal onClose={handleModalClose} onSubmit={handleTrain} />}
       <S.Canvas ref={dropRef}>
         <ReactFlow
           nodes={nodes.map((node) => ({
@@ -154,6 +212,8 @@ const CanvasEditor = () => {
             data: {
               ...node.data,
               onFieldChange: (fieldName: string, value: string) => handleFieldChange(node.id, fieldName, value),
+              isConnected: getConnectedStatus(node.id),
+              isSelected: node.id === selectedNode?.id,
             },
           }))}
           edges={edges}
@@ -161,6 +221,7 @@ const CanvasEditor = () => {
           onEdgesChange={handleEdgesChange}
           onConnect={onConnect}
           onNodeClick={(_, node) => setSelectedNode(node)}
+          onPaneClick={() => setSelectedNode(null)}
           nodeTypes={{ custom: BlockNode }}
         >
           <Controls position="bottom-center" orientation="horizontal" />
@@ -171,7 +232,7 @@ const CanvasEditor = () => {
             text="실행"
             icon={<PlayIcon width={13} height={16} />}
             width="5.5rem"
-            onClick={handleTrainButtonClick}
+            onClick={handleRunButtonClick}
           />
           <BasicButton
             text="저장"

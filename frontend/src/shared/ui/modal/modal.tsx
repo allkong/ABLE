@@ -6,22 +6,24 @@ import ModalPortal from '@shared/ui/modal/modal-portal';
 
 interface ModalProps {
   onClose: () => void;
-  isClosing?: boolean;
-  onAnimationEnd?: () => void;
+  onConfirm?: () => void;
   title: string;
   children: ReactNode;
   cancelText?: string;
   confirmText?: string;
+  isClosing?: boolean;
+  onAnimationEnd?: () => void;
 }
 
 const Modal = ({
   onClose,
-  isClosing,
-  onAnimationEnd,
+  onConfirm,
   title,
   children,
   cancelText = '취소',
   confirmText = '확인',
+  isClosing,
+  onAnimationEnd,
 }: ModalProps) => (
   <ModalPortal>
     <S.ModalOverlay onClick={onClose} onAnimationEnd={onAnimationEnd} className={isClosing ? 'fadeOut' : 'fadeIn'}>
@@ -33,7 +35,7 @@ const Modal = ({
         <S.ModalBody>{children}</S.ModalBody>
         <S.ModalFooter>
           <S.CancelButton onClick={onClose}>{cancelText}</S.CancelButton>
-          <S.ConfirmButton>{confirmText}</S.ConfirmButton>
+          <S.ConfirmButton onClick={onConfirm}>{confirmText}</S.ConfirmButton>
         </S.ModalFooter>
       </S.ModalWrapper>
     </S.ModalOverlay>

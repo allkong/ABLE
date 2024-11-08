@@ -1,8 +1,10 @@
 import { Node as XYFlowNode, Edge as XYFlowEdge } from '@xyflow/react';
 
+import { DATA_BLOCK_ID } from '@features/canvas/costants/block.constant';
+
 export const initialNodes: XYFlowNode[] = [
   {
-    id: '1',
+    id: DATA_BLOCK_ID,
     type: 'custom',
     position: { x: 50, y: 50 },
     data: {

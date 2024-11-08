@@ -12,7 +12,7 @@ export interface BlockSchema extends Block {
   position: string;
 }
 
-export interface CanvasResponse {
+export interface CanvasSchema {
   canvas: { blocks: BlockSchema[]; edges: EdgeSchema[] };
 }
 
