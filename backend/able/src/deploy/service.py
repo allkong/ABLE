@@ -3,13 +3,14 @@ import subprocess
 import sys
 import json
 import logging
+from typing import Optional
 from pathlib import Path
 from src.deploy.enums import DeployStatus
 from src.deploy.exceptions import AlreadyExistApiException, AlreadyRunException, AlreadyStopException
-from src.deploy.schemas import RegisterApiRequest
-from src.file.utils import get_file, create_file, remove_file
+from src.deploy.schemas import RegisterApiRequest, ApiInformation
+from src.file.utils import get_file, create_file, remove_file, get_files
 from src.file.path_manager import PathManager
-from src.utils import str_to_json, json_to_str
+from src.utils import str_to_json, json_to_str, handle_pagination
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -198,7 +199,6 @@ def remove_router(uri: str) -> bool:
     path_name = uri.strip("/").replace("/", "_")
     file_path = ROUTER_DIR / f"{path_name}.py"
     
-    # TODO: path_name.json 파일 삭제
     json_path = path_manager.get_deploy_path() / f"{path_name}.json"
     if remove_file(json_path):
         logger.info(f"파일 삭제 완료: {json_path}")
@@ -240,3 +240,18 @@ def remove_router(uri: str) -> bool:
             return False
     except Exception as e:
         return False
+    
+def get_api_list(page: int, page_size: int) -> Optional[list[ApiInformation]]:
+    deploy_path = path_manager.get_deploy_path()
+    deploy_list = [file_name for file_name in get_files(deploy_path) if file_name != 'metadata.json' ]
+    api_list = handle_pagination(deploy_list, page, page_size)
+    api_info_list = []
+
+    if api_list is None:
+        return None
+
+    for api in api_list :
+        file_path = deploy_path / api
+        api_info_list.append(ApiInformation(**str_to_json(get_file(file_path))))
+
+    return api_info_list

@@ -116,3 +116,8 @@ async def save_img(path: Path, file_name: str, file: UploadFile) -> Path:
         raise ImageSaveFailException("원본 이미지 저장에 실패하였습니다.")
     
     return img_path
+
+def get_files(path: Path) -> List[str]:
+    if path.exists() and path.is_dir():
+        return [file_path.name for file_path in path.iterdir() if file_path.is_file()]
+    return []
