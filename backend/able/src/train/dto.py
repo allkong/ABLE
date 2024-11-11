@@ -7,7 +7,7 @@ class TrainRequest(ImmutableBaseModel):
     project_name: str
     epoch: int
     batch_size: int
-    device: Device = Device(index = -1, name='cpu')
+    device: Device
     canvas: Canvas
 
 class TrainResponse(ImmutableBaseModel):

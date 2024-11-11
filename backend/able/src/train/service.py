@@ -11,6 +11,8 @@ from typing import List
 import logging
 
 from src.train_log.utils import format_float
+from ..device.schema import DeviceStatus
+from ..device.utils import get_device_status, update_device_status
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -80,6 +82,11 @@ def train(request: TrainRequest):
     if request.device.index != -1:
         device = f"cuda:{request.device.index}"
 
+    if get_device_status(request.device.name) == DeviceStatus.IN_USE:
+        raise Exception()
+
+    update_device_status(request.device.name, DeviceStatus.IN_USE)
+
     train_logger = TrainLogger(project_name, result_name)
 
     try:
@@ -96,6 +103,8 @@ def train(request: TrainRequest):
     except Exception as e:
         train_logger.update_status(TrainStatus.FAIL)
         raise e
+    finally:
+        update_device_status(request.device.name, DeviceStatus.NOT_IN_USE)
 
 def load_train_result(project_name: str, result_name: str) -> TrainResultResponse:
 

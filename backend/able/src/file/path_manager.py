@@ -13,10 +13,17 @@ class PathManager:
         self.blocks_path = self.BASE_PATH / "blocks"
         self.data_path = self.BASE_PATH / "data"
         self.deploy_path = self.data_path / "deploy"
+        self.devices_path = self.data_path / "devices"
         self.projects_path = self.data_path / "projects"
 
     def get_deploy_path(self) -> Path:
         return self.deploy_path
+
+    def get_devices_path(self) -> Path:
+        return self.devices_path
+
+    def get_device_path(self, device_name: str) -> Path:
+        return self.devices_path / f"{device_name}.json"
 
     def get_block_path(self, block_type: BlockType) -> Path:
         """특정 블록 타입 경로"""
