@@ -24,6 +24,8 @@ async def get_checkpoints(project_name: str, result_name: str,
             summary="피쳐 맵 조회", description="블록의 피쳐맵 조회, 피쳐맵이 존재하지 않는 블록일 경우 null 반환")
 async def get_feature_map( request: FeatureMapRequest):
     feature_map = service.get_feature_map(request)
+    if feature_map is None:
+        return no_content()
     return ok(data=FeatureMapResponse(feature_map=feature_map))
 
 @router.post("", 
