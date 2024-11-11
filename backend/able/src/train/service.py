@@ -73,7 +73,7 @@ def train(request: TrainRequest):
     save_metadata(project_name, result_name, data_block, dataset.classes)
 
     # 학습 모델 그래프 저장
-    save_result_block_graph(request.project_name, result_name, canvas_blocks, edges_model)
+    save_result_block_graph(request.project_name, result_name, canvas_blocks, edges)
 
     # 하이퍼 파라미터 정보 저장 (hyper_parameters.json)
     save_result_hyper_parameter(request.project_name, result_name, request.batch_size, request.epoch)
