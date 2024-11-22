@@ -37,7 +37,7 @@ ABLE은 **처음 사용하는 사용자에게 편의성을 제공**해주기 위
 
 |            사용자 가이드 조회            |
 | :--------------------------------------: |
-| <img width="1600" src="assets/able_docs.gif"> |
+| <img src="assets/able_docs.gif"> |
 
 </br>
 
@@ -49,11 +49,11 @@ ABLE은 **블록을 활용한 직관적인 시각적 인터페이스**를 통해
 
 |                블록 조회                 |                블록 추가                 |
 | :--------------------------------------: | :--------------------------------------: |
-| <img width="800" src="assets/preview/블록 조회.gif"> | <img width="800" src="assets/preview/블록 추가.gif"> |
+| <img src="assets/preview/블록 조회.gif"> | <img src="assets/preview/블록 추가.gif"> |
 
 |                블록 연결                 |                블록 삭제                 |
 | :--------------------------------------: | :--------------------------------------: |
-| <img width="800" src="assets/preview/블록 연결.gif"> | <img width="800" src="assets/preview/블록 삭제.gif"> |
+| <img src="assets/preview/블록 연결.gif"> | <img src="assets/preview/블록 삭제.gif"> |
 
 </br>
 
@@ -65,7 +65,7 @@ ABLE은 유효성 검증 기능을 통해 **블록 코딩 작업의 안정성을
 
 |                연결성 확인                 |                 순환 생성 방지                 |
 | :----------------------------------------: | :--------------------------------------------: |
-| <img width="800" src="assets/preview/연결성 확인.gif"> | <img width="800" src="assets/preview/순환 생성 방지.gif"> |
+| <img src="assets/preview/연결성 확인.gif"> | <img src="assets/preview/순환 생성 방지.gif"> |
 
 </br>
 
@@ -86,7 +86,7 @@ ABLE은 사용자가 생성한 블록 모델을 통해 **효율적인 자동화 
 
 | 학습 시작 및 결과 조회 |
 | :-------------------: |
-| <img width="1600" src="assets/train.gif"> |
+| <img src="assets/train.gif"> |
 
   </br>
 
@@ -108,7 +108,7 @@ ABLE은 사용자가 학습을 완료한 **딥러닝 모델을 직관적이고 �
 
 | 분석 시작 및 결과 조회 |
 | :------------------: |
-| <img width="1600" src="assets/analysis.gif"> |
+| <img src="assets/analysis.gif"> |
 
   </br>
 
@@ -122,11 +122,11 @@ ABLE은 **버튼 클릭만으로 FastAPI 프레임워크 기반의 서버를 실
 
 | 서버 시작 | API 추가 및 목록 조회 |
 | :---: | :---: |
-| <img width="800" src="assets/start-server.gif"> | <img width="800" src="assets/add-search-api.gif"> | 
+| <img src="assets/start-server.gif"> | <img src="assets/add-search-api.gif"> | 
 
 | API 테스트 | API 삭제 및 서버 종료 |
 | :---: | :---: |
-| <img width="800" src="assets/test-api.gif"> | <img width="800" src="assets/delete-api.gif">
+| <img src="assets/test-api.gif"> | <img src="assets/delete-api.gif">
 </br>
 
 ## ⚒️ 기술 스택
@@ -166,18 +166,18 @@ ABLE은 **버튼 클릭만으로 FastAPI 프레임워크 기반의 서버를 실
 
 ## 🧑🏻 팀원
 
-<table border="1" style="border-collapse: collapse; text-align: center; width: 100%;">
+<table>
     <tr>
-      <th scope="col" colspan="4" style="text-align: center; background-color: #ADD8E6; color: #FFF;"> Server </th>
-      <th scope="col" colspan="2" style="text-align: center; background-color: #C6ABFF; color: #FFF;"> Client </th>
+      <th scope="col" colspan="4"> Server </th>
+      <th scope="col" colspan="2"> Client </th>
     </tr>
     <tr>
-      <td style="text-align: center; background-color: #ADD8E6; color: #FFF;">박근석</td>
-      <td style="text-align: center; background-color: #ADD8E6; color: #FFF;">박다솔</td>
-      <td style="text-align: center; background-color: #ADD8E6; color: #FFF;">박상후</td>
-      <td style="text-align: center; background-color: #ADD8E6; color: #FFF;">박찬규</td>
-      <td style="text-align: center; background-color: #C6ABFF; color: #FFF;">정다빈</td>
-      <td style="text-align: center; background-color: #C6ABFF; color: #FFF;">조민주</td>
+      <td>박근석</td>
+      <td>박다솔</td>
+      <td>박상후</td>
+      <td>박찬규</td>
+      <td>정다빈</td>
+      <td>조민주</td>
     </tr>
     <tr>
       <td>
