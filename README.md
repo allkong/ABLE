@@ -35,9 +35,9 @@ ABLE은 **처음 사용하는 사용자에게 편의성을 제공**해주기 위
 
 </br>
 
-|                   사용자 가이드 조회                   |
-| :----------------------------------------------------: |
-| <img src="assets/preview/able_docs.gif" width="800px"> |
+|                     사용자 가이드 조회                     |
+| :--------------------------------------------------------: |
+| <img src="assets/preview/gif/able_docs.gif" width="800px"> |
 
 </br>
 
@@ -47,13 +47,13 @@ ABLE은 **블록을 활용한 직관적인 시각적 인터페이스**를 통해
 
 </br>
 
-|                 블록 조회                 |                블록 추가                 |
-| :---------------------------------------: | :--------------------------------------: |
-| <img src="assets/preview/block-menu.gif"> | <img src="assets/preview/add-block.gif"> |
+|                   블록 조회                   |                  블록 추가                   |
+| :-------------------------------------------: | :------------------------------------------: |
+| <img src="assets/preview/gif/block-menu.gif"> | <img src="assets/preview/gif/add-block.gif"> |
 
-|                블록 연결                |                  블록 삭제                  |
-| :-------------------------------------: | :-----------------------------------------: |
-| <img src="assets/preview/add-edge.gif"> | <img src="assets/preview/delete-block.gif"> |
+|                  블록 연결                  |                    블록 삭제                    |
+| :-----------------------------------------: | :---------------------------------------------: |
+| <img src="assets/preview/gif/add-edge.gif"> | <img src="assets/preview/gif/delete-block.gif"> |
 
 </br>
 
@@ -63,9 +63,9 @@ ABLE은 유효성 검증 기능을 통해 **블록 코딩 작업의 안정성을
 
 </br>
 
-|                연결성 확인                |               순환 생성 방지               |
-| :---------------------------------------: | :----------------------------------------: |
-| <img src="assets/preview/root-valid.gif"> | <img src="assets/preview/cycle-valid.gif"> |
+|                  연결성 확인                  |                 순환 생성 방지                 |
+| :-------------------------------------------: | :--------------------------------------------: |
+| <img src="assets/preview/gif/root-valid.gif"> | <img src="assets/preview/gif/cycle-valid.gif"> |
 
 </br>
 
@@ -88,9 +88,9 @@ ABLE은 사용자가 생성한 블록 모델을 통해 **효율적인 자동화 
 
   </br>
 
-|               학습 시작 및 결과 조회               |
-| :------------------------------------------------: |
-| <img src="assets/preview/train.gif" width="800px"> |
+|                 학습 시작 및 결과 조회                 |
+| :----------------------------------------------------: |
+| <img src="assets/preview/gif/train.gif" width="800px"> |
 
   </br>
 
@@ -112,9 +112,9 @@ ABLE은 사용자가 학습을 완료한 **딥러닝 모델을 직관적이고 �
 
   </br>
 
-|                분석 시작 및 결과 조회                 |
-| :---------------------------------------------------: |
-| <img src="assets/preview/analysis.gif" width="800px"> |
+|                  분석 시작 및 결과 조회                   |
+| :-------------------------------------------------------: |
+| <img src="assets/preview/gif/analysis.gif" width="800px"> |
 
   </br>
 
@@ -128,13 +128,13 @@ ABLE은 **버튼 클릭만으로 FastAPI 프레임워크 기반의 서버를 실
 
   </br>
 
-|                  서버 시작                  |             API 추가 및 목록 조회             |
-| :-----------------------------------------: | :-------------------------------------------: |
-| <img src="assets/preview/start-server.gif"> | <img src="assets/preview/add-search-api.gif"> |
+|                    서버 시작                    |               API 추가 및 목록 조회               |
+| :---------------------------------------------: | :-----------------------------------------------: |
+| <img src="assets/preview/gif/start-server.gif"> | <img src="assets/preview/gif/add-search-api.gif"> |
 
-|               API 테스트                |           API 삭제 및 서버 종료           |
-| :-------------------------------------: | :---------------------------------------: |
-| <img src="assets/preview/test-api.gif"> | <img src="assets/preview/delete-api.gif"> |
+|                 API 테스트                  |             API 삭제 및 서버 종료             |
+| :-----------------------------------------: | :-------------------------------------------: |
+| <img src="assets/preview/gif/test-api.gif"> | <img src="assets/preview/gif/delete-api.gif"> |
 
 </br>
 
