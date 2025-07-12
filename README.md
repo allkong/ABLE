@@ -4,6 +4,8 @@
 
 ## 📅 프로젝트 정보
 
+[회고 보러가기 ✍️](https://allkong.tistory.com/95)
+
 <div align=center>
 
 ### SSAFY 11기 2학기 자율 프로젝트
@@ -163,7 +165,7 @@ ABLE은 **버튼 클릭만으로 FastAPI 프레임워크 기반의 서버를 실
 | Styling          | <img src="https://img.shields.io/badge/emotion-D36AC2?style=for-the-badge&logo=emotion&logoColor=white">                                                                                                                    |
 | State Management | <img src="https://img.shields.io/badge/zustand-433E38?style=for-the-badge&logo=zustand&logoColor=white"> <img src="https://img.shields.io/badge/tanstack query-FF4154?style=for-the-badge&logo=reactquery&logoColor=white"> |
 | Version Control  | <img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white"/> <img src="https://img.shields.io/badge/gitLAB-fc6d26?style=for-the-badge&logo=gitlab&logoColor=white"/>                   |
-| IDE              | <img src="https://img.shields.io/badge/Visual Studio Code-0078d7.svg?style=for-the-badge&logo=visualstudiocode&logoColor=white"/>                                                                                           |
+| Editor           | <img src="https://img.shields.io/badge/Visual Studio Code-0078d7.svg?style=for-the-badge&logo=visualstudiocode&logoColor=white"/>                                                                                           |
 
 </br>
 
