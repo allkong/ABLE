@@ -2,9 +2,11 @@
 
 <img src="assets/able.gif" width="100%" />
 
-## 📅 프로젝트 정보
-
 [회고 보러가기 ✍️](https://allkong.tistory.com/95)
+
+</br>
+
+## 📅 프로젝트 정보
 
 <div align=center>
 
